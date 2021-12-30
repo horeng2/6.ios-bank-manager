@@ -11,24 +11,24 @@ struct BankManager {
     case openBank = "1"
     case exit = "2"
   }
-  
+
   private func chooseMenu() -> String {
     print("""
           1 : 은행 개점
           2 : 종료
           입력 :
           """, terminator: "")
-    
+
     guard let input = readLine() else {
       return ""
     }
     return input
   }
-  
+
   mutating func runBankManager(numberOfDepositBankers: Int, numberOfLoanBankers: Int) {
     while true {
       let choiceMenu = self.chooseMenu()
-      
+
       switch choiceMenu {
       case Menu.openBank.rawValue :
         operateBank(numberOfDepositBankers: numberOfDepositBankers,
@@ -40,7 +40,7 @@ struct BankManager {
       }
     }
   }
-  
+
   private mutating func operateBank (numberOfDepositBankers: Int, numberOfLoanBankers: Int) {
     let numberOfClients = Int.random(in: 10...30)
     let bankers = prepareBanker(numberOfDepositBankers: numberOfDepositBankers,
@@ -49,7 +49,7 @@ struct BankManager {
     let bank = Bank(numberOfClients: numberOfClients, bankers: bankers, clientQueue: clients,  operatingTimeManager: OperatingTimeManager())
     bank.doBanking()
   }
-  
+
   private mutating func prepareBanker(numberOfDepositBankers: Int,
                                       numberOfLoanBankers: Int) -> [Banker] {
     let depositeBankers = Array.init(repeating: Banker(assignedTask: .deposit),
@@ -58,7 +58,7 @@ struct BankManager {
                                  count: numberOfLoanBankers)
     return depositeBankers + loanBankers
   }
-  
+
   private func clientLineUp(numberOfClients: Int) -> Queue<Client> {
     let numberOfClients = numberOfClients
     var clientQueue = Queue<Client>()
@@ -68,4 +68,4 @@ struct BankManager {
     return clientQueue
   }
 }
-                              
+
